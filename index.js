@@ -1,6 +1,7 @@
 const redux = require ('redux');
 const createStore = redux.createStore;
 const combineReducers = redux.combineReducers;
+const produce = require('immer').produce;
 
 const initial_cookie_state = {
     numberOfCookies : 10
@@ -56,16 +57,14 @@ const cookieReducer = (state = initial_cookie_state ,action) => {
     switch (action.type){
         case ORDER_BOTH:
         case BUY_COOKIE: {
-            return {
-                ...state,
-                numberOfCookies:state.numberOfCookies - 1,
-            }
+            return produce(state , (draftCopyofState) => {
+                draftCopyofState.numberOfCookies -= 1;
+            })
         }
         case COOKIE_RESTOCK: {
-            return {
-                ...state,
-                numberOfCookies:state.numberOfCookies + action.payload
-            }
+            return produce(state , (draftCopyofState) => {
+                draftCopyofState.numberOfCookies += action.payload;
+            })
         }
         default:
             return state;
@@ -76,16 +75,14 @@ const iceCreamReducer = (state = initial_ice_cream_state ,action) => {
     switch (action.type){
         case ORDER_BOTH:
         case BUY_ICE_CREAM: {
-            return {
-                ...state,
-                numberOfIceCream:state.numberOfIceCream - 1,
-            }
+            return produce(state , (draftCopyofState) => {
+                draftCopyofState.numberOfIceCream -= 1;
+            })
         }
         case ICE_CREAM_RESTOCK: {
-            return {
-                ...state,
-                numberOfIceCream:state.numberOfIceCream + action.payload
-            }
+            return produce(state , (draftCopyofState) => {
+                draftCopyofState.numberOfIceCream += action.payload;
+            })
         }
         default:
             return state;
