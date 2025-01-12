@@ -1,6 +1,7 @@
 const redux = require ('redux');
 const createStore = redux.createStore;
 const combineReducers = redux.combineReducers;
+const produce = require('immer').produce; 
 const applyMiddleware = redux.applyMiddleware;
 const reduxLogger = require('redux-logger');
 const logger = reduxLogger.createLogger(); 
