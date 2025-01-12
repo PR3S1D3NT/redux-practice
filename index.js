@@ -1,8 +1,13 @@
 const redux = require ('redux');
 const createStore = redux.createStore;
 const combineReducers = redux.combineReducers;
-const produce = require('immer').produce;
+const produce = require('immer').produce; 
+const applyMiddleware = redux.applyMiddleware;
+const reduxLogger = require('redux-logger');
+const logger = reduxLogger.createLogger(); 
 
+
+//Initial state
 const initial_cookie_state = {
     numberOfCookies : 10
 }
@@ -91,12 +96,12 @@ const iceCreamReducer = (state = initial_ice_cream_state ,action) => {
 
 
 const rootReducer = combineReducers ({ Cookie : cookieReducer , Ice_Cream : iceCreamReducer });
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(logger));
 
 console.log("Initial State",store.getState());
 
 //Assign listener which listens to state updates
-const listener = store.subscribe(() => { console.log("Updated value ", store.getState())});
+const listener = store.subscribe(() => {});
 
 console.log(store.dispatch(orderCookie()));
 console.log(store.dispatch(orderCookie()));
